@@ -17,6 +17,11 @@ enum Character {
 
 enum PlayerState {
   idle('Idle', 11),
+  doubleJump('Double Jump', 6),
+  jump('Jump', 1),
+  fall('Fall', 1),
+  hit('Hit', 7),
+  wallJump('Wall Jump', 5),
   running('Run', 12);
 
   const PlayerState(this.fileName, this.seqAmount);
@@ -28,7 +33,8 @@ class Player extends SpriteAnimationGroupComponent
     with HasGameRef<FlamePixelAdventure> {
   Player({
     required this.character,
-  });
+    Vector2? position,
+  }) : super(position: position);
   final Character character;
 
   late final SpriteAnimation idleAnimation;
