@@ -58,13 +58,13 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/sprites/
-    - assets/sprites/Terrain/
-    - assets/sprites/MainCharacters/
-    - assets/sprites/MainCharacters/MaskDude/
-    - assets/sprites/MainCharacters/NinjaFrog/
-    - assets/sprites/MainCharacters/PinkMan/
-    - assets/sprites/MainCharacters/VirtualGuy/
+    - assets/images/
+    - assets/images/Terrain/
+    - assets/images/MainCharacters/
+    - assets/images/MainCharacters/MaskDude/
+    - assets/images/MainCharacters/NinjaFrog/
+    - assets/images/MainCharacters/PinkMan/
+    - assets/images/MainCharacters/VirtualGuy/
     - assets/tiles/
 
   # An image asset can refer to one or more resolution-specific "variants", see
