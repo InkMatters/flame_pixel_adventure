@@ -55,7 +55,7 @@ class Player extends SpriteAnimationGroupComponent
       PlayerState.running: runningAnimation,
     };
 
-    current = PlayerState.running;
+    current = PlayerState.idle;
   }
 
   SpriteAnimation _generateAnimation({

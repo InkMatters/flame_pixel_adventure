@@ -4,12 +4,20 @@ import 'package:flame/components.dart';
 import 'package:flame_pixel_adventure/actors/player.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
+mixin Levels {
+  static const String levelOne = 'level-01.tmx';
+  static const String levelTwo = 'level-02.tmx';
+}
+
 class Level extends World {
+  Level(this.levelName);
+  final String levelName;
+
   late TiledComponent level;
 
   @override
   FutureOr<void> onLoad() async {
-    level = await TiledComponent.load('level-01.tmx', Vector2.all(16));
+    level = await TiledComponent.load(levelName, Vector2.all(16));
     add(level);
 
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>('SpawnPoints');

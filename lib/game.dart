@@ -9,7 +9,7 @@ import 'resources/color_palette.dart';
 
 class FlamePixelAdventure extends FlameGame {
   late final CameraComponent camera;
-  final level = Level();
+  final level = Level(Levels.levelTwo);
 
   @override
   Color backgroundColor() => ColorPalette.background;
