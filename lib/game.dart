@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 import 'levels/level.dart';
 import 'resources/color_palette.dart';
 
-class FlamePixelAdventure extends FlameGame {
+class FlamePixelAdventure extends FlameGame with HasKeyboardHandlerComponents {
   late final CameraComponent camera;
   final level = Level(Levels.levelOne);
 
