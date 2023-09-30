@@ -26,7 +26,9 @@ class FlamePixelAdventure extends FlameGame {
   Color backgroundColor() => ColorPalette.background;
 
   @override
-  FutureOr<void> onLoad() {
+  FutureOr<void> onLoad() async {
+    await images.loadAllImages();
+
     camera = CameraComponent.withFixedResolution(
       world: level,
       width: 640,
