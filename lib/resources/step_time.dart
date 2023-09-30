@@ -1,3 +1,3 @@
 mixin StepTime {
-  static const double idle = 0.05;
+  static const double character = 0.05;
 }
