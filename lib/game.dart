@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_pixel_adventure/actors/player.dart';
 import 'package:flutter/material.dart';
 
+import 'actors/player.dart';
 import 'levels/level.dart';
 import 'resources/color_palette.dart';
 
@@ -29,13 +29,13 @@ class FlamePixelAdventure extends FlameGame
     );
     camera.viewfinder.anchor = Anchor.topLeft;
 
-    addAll(<Component>[camera, level]);
     addJoyStick();
+    await addAll(<Component>[camera, level]);
 
     return super.onLoad();
   }
 
-  void addJoyStick() {
+  Future<void> addJoyStick() async {
     joystick = JoystickComponent(
       priority: 10,
       margin: const EdgeInsets.only(left: 32, bottom: 32),
@@ -50,6 +50,6 @@ class FlamePixelAdventure extends FlameGame
         ),
       ),
     );
-    add(joystick);
+    await add(joystick);
   }
 }
