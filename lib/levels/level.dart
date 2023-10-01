@@ -10,8 +10,12 @@ mixin Levels {
 }
 
 class Level extends World {
-  Level(this.levelName);
+  Level({
+    required this.levelName,
+    required this.player,
+  });
   final String levelName;
+  final Player player;
 
   late TiledComponent level;
 
@@ -25,11 +29,7 @@ class Level extends World {
     for (final TiledObject spawnPoint in spawnPointsLayer?.objects ?? []) {
       switch (spawnPoint.class_) {
         case 'Player':
-          final player = Player(
-            character: Character.ninjaFrog,
-            position: Vector2(spawnPoint.x, spawnPoint.y),
-          );
-
+          player.position = Vector2(spawnPoint.x, spawnPoint.y);
           add(player);
           break;
         default:

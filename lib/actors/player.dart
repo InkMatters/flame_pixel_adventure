@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flutter/services.dart';
 import 'package:flame_pixel_adventure/resources/step_time.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:flutter/src/services/raw_keyboard.dart';
@@ -36,7 +37,7 @@ enum PlayerDirection { left, right, none }
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<FlamePixelAdventure>, KeyboardHandler {
   Player({
-    required this.character,
+    this.character = Character.virtualGuy,
     Vector2? position,
   }) : super(position: position);
   final Character character;
