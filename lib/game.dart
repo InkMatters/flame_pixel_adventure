@@ -30,13 +30,26 @@ class FlamePixelAdventure extends FlameGame
     camera.viewfinder.anchor = Anchor.topLeft;
 
     addAll(<Component>[camera, level]);
-
     addJoyStick();
 
     return super.onLoad();
   }
 
   void addJoyStick() {
-    joystick = JoystickComponent();
+    joystick = JoystickComponent(
+      priority: 10,
+      margin: const EdgeInsets.only(left: 32, bottom: 32),
+      knob: SpriteComponent(
+        sprite: Sprite(
+          images.fromCache('HUD/Knob.png'),
+        ),
+      ),
+      background: SpriteComponent(
+        sprite: Sprite(
+          images.fromCache('HUD/Joystick.png'),
+        ),
+      ),
+    );
+    add(joystick);
   }
 }

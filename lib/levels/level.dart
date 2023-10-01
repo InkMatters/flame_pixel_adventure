@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
-import 'package:flame_pixel_adventure/actors/player.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+
+import '../actors/player.dart';
 
 mixin Levels {
   static const String levelOne = 'level-01.tmx';
@@ -18,6 +19,7 @@ class Level extends World {
   final Player player;
 
   late TiledComponent level;
+  late JoystickComponent joystickComponent;
 
   @override
   FutureOr<void> onLoad() async {
