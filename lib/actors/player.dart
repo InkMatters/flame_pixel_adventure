@@ -68,6 +68,7 @@ class Player extends SpriteAnimationGroupComponent
         keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isRightKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD) ||
         keysPressed.contains(LogicalKeyboardKey.arrowRight);
+
     if (isLeftKeyPressed && isRightKeyPressed) {
       direction = PlayerDirection.none;
     } else if (isLeftKeyPressed) {

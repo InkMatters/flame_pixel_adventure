@@ -11,9 +11,10 @@ import 'resources/color_palette.dart';
 
 class FlamePixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks {
-  final level = Level(levelName: Levels.levelOne, player: Player());
+  Player player = Player();
   late final CameraComponent camera;
   late JoystickComponent joystick;
+  bool showJoystick = true;
 
   @override
   Color backgroundColor() => ColorPalette.background;
@@ -22,23 +23,37 @@ class FlamePixelAdventure extends FlameGame
   FutureOr<void> onLoad() async {
     await images.loadAllImages();
 
+    final level = Level(
+      levelName: Levels.levelOne,
+      player: player,
+    );
+
+    if (showJoystick) {
+      createJoystick();
+    }
     camera = CameraComponent.withFixedResolution(
       world: level,
       width: 640,
       height: 360,
+      hudComponents: showJoystick ? [joystick] : null,
     );
     camera.viewfinder.anchor = Anchor.topLeft;
 
-    addJoyStick();
     await addAll(<Component>[camera, level]);
 
     return super.onLoad();
   }
 
-  Future<void> addJoyStick() async {
+  @override
+  void update(double dt) {
+    updateJoystick();
+    super.update(dt);
+  }
+
+  void createJoystick() {
     joystick = JoystickComponent(
       priority: 10,
-      margin: const EdgeInsets.only(left: 32, bottom: 32),
+      margin: const EdgeInsets.only(left: 1, bottom: 28),
       knob: SpriteComponent(
         sprite: Sprite(
           images.fromCache('HUD/Knob.png'),
@@ -50,6 +65,26 @@ class FlamePixelAdventure extends FlameGame
         ),
       ),
     );
-    await add(joystick);
+  }
+
+  void updateJoystick() {
+    if (!showJoystick) {
+      return;
+    }
+    switch (joystick.direction) {
+      case JoystickDirection.right:
+      case JoystickDirection.upRight:
+      case JoystickDirection.downRight:
+        player.direction = PlayerDirection.right;
+        break;
+      case JoystickDirection.left:
+      case JoystickDirection.upLeft:
+      case JoystickDirection.downLeft:
+        player.direction = PlayerDirection.left;
+        break;
+      default:
+        player.direction = PlayerDirection.none;
+        break;
+    }
   }
 }
