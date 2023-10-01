@@ -3,13 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "PixelAdventureOne.tsx",
+    "activeFile": "level-02.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "PixelAdventureOne.tsx": {
-            "scaleInDock": 0.5,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "level-01.tmx": {
@@ -22,6 +22,14 @@
                 "x": 271.5,
                 "y": 198
             }
+        },
+        "level-02.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 333,
+                "y": 264.66666666666663
+            }
         }
     },
     "last.imagePath": "/Users/dustec/Documents/GitHub/flame_pixel_adventure/assets/images/Terrain",
@@ -32,12 +40,14 @@
     "map.width": 40,
     "openFiles": [
         "PixelAdventureOne.tsx",
-        "level-01.tmx"
+        "level-01.tmx",
+        "level-02.tmx"
     ],
     "project": "pixel_adventure.tiled-project",
     "recentFiles": [
+        "PixelAdventureOne.tsx",
         "level-01.tmx",
-        "PixelAdventureOne.tsx"
+        "level-02.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
