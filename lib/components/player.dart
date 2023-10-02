@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
-import '../resources/step_time.dart';
 
 import '../game.dart';
+import '../resources/step_time.dart';
 
 enum Character {
   maskDude('MaskDude'),
@@ -30,8 +30,6 @@ enum PlayerState {
   final int seqAmount;
 }
 
-enum PlayerDirection { left, right, none }
-
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<FlamePixelAdventure>, KeyboardHandler {
   Player({
@@ -43,10 +41,9 @@ class Player extends SpriteAnimationGroupComponent
   late final SpriteAnimation idleAnimation;
   late final SpriteAnimation runningAnimation;
 
-  PlayerDirection direction = PlayerDirection.none;
+  double horizontalMovement = 0;
   double speed = 100;
   Vector2 velocity = Vector2.zero();
-  bool isFacingRight = true;
 
   @override
   FutureOr<void> onLoad() {
@@ -56,28 +53,23 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   void update(double dt) {
+    _updatePlayerState();
     _updatePlayerMovement(dt);
     super.update(dt);
   }
 
   @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    horizontalMovement = 0;
     final isLeftKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyA) ||
         keysPressed.contains(LogicalKeyboardKey.arrowLeft);
     final isRightKeyPressed = keysPressed.contains(LogicalKeyboardKey.keyD) ||
         keysPressed.contains(LogicalKeyboardKey.arrowRight);
 
-    if (isLeftKeyPressed && isRightKeyPressed) {
-      direction = PlayerDirection.none;
-    } else if (isLeftKeyPressed) {
-      direction = PlayerDirection.left;
-    } else if (isRightKeyPressed) {
-      direction = PlayerDirection.right;
-    } else {
-      direction = PlayerDirection.none;
-    }
+    horizontalMovement += isLeftKeyPressed ? -1 : 0;
+    horizontalMovement += isRightKeyPressed ? 1 : 0;
 
-    return super.onKeyEvent(event, keysPressed);
+    return false;
   }
 
   void _loadAllAnimations() {
@@ -107,32 +99,21 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void _updatePlayerMovement(double dt) {
-    double directionX = 0.0;
+    velocity.x = horizontalMovement * speed;
+    position.x += velocity.x * dt;
+  }
 
-    switch (direction) {
-      case PlayerDirection.left:
-        if (isFacingRight) {
-          flipHorizontallyAroundCenter();
-          isFacingRight = false;
-        }
-        directionX -= speed;
-        current = PlayerState.running;
-        break;
-      case PlayerDirection.right:
-        if (!isFacingRight) {
-          flipHorizontallyAroundCenter();
-          isFacingRight = true;
-        }
-        directionX += speed;
-        current = PlayerState.running;
-        break;
-      case PlayerDirection.none:
-      default:
-        current = PlayerState.idle;
-        break;
+  void _updatePlayerState() {
+    PlayerState state = PlayerState.idle;
+
+    if (velocity.x < 0 && scale.x > 0) {
+      flipHorizontallyAroundCenter();
+    } else if (velocity.x > 0 && scale.x < 0) {
+      flipHorizontallyAroundCenter();
     }
 
-    velocity = Vector2(directionX, 0.0);
-    position += velocity * dt;
+    if (velocity.x != 0) state = PlayerState.running;
+
+    current = state;
   }
 }

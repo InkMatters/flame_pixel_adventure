@@ -9,5 +9,9 @@ Future<void> main() async {
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
 
-  runApp(GameWidget(game: FlamePixelAdventure()));
+  runApp(
+    GameWidget(
+      game: FlamePixelAdventure(),
+    ),
+  );
 }

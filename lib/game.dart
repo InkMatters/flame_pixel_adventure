@@ -15,7 +15,7 @@ class FlamePixelAdventure extends FlameGame
   @override
   late final CameraComponent camera;
   late JoystickComponent joystick;
-  bool showJoystick = true;
+  bool showJoystick = false;
 
   @override
   Color backgroundColor() => ColorPalette.background;
@@ -25,7 +25,7 @@ class FlamePixelAdventure extends FlameGame
     await images.loadAllImages();
 
     final level = Level(
-      levelName: Levels.levelOne,
+      levelName: Levels.levelTwo,
       player: player,
     );
 
@@ -76,15 +76,15 @@ class FlamePixelAdventure extends FlameGame
       case JoystickDirection.right:
       case JoystickDirection.upRight:
       case JoystickDirection.downRight:
-        player.direction = PlayerDirection.right;
+        player.horizontalMovement = 1;
         break;
       case JoystickDirection.left:
       case JoystickDirection.upLeft:
       case JoystickDirection.downLeft:
-        player.direction = PlayerDirection.left;
+        player.horizontalMovement = -1;
         break;
       default:
-        player.direction = PlayerDirection.none;
+        player.horizontalMovement = 0;
         break;
     }
   }

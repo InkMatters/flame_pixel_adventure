@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame_pixel_adventure/components/collision_bloc.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 import 'player.dart';
@@ -20,6 +21,7 @@ class Level extends World {
 
   late TiledComponent level;
   late JoystickComponent joystickComponent;
+  List<CollisionBlock> collisionBlocks = <CollisionBlock>[];
 
   @override
   FutureOr<void> onLoad() async {
@@ -28,16 +30,44 @@ class Level extends World {
 
     final spawnPointsLayer = level.tileMap.getLayer<ObjectGroup>('SpawnPoints');
 
-    for (final TiledObject spawnPoint in spawnPointsLayer?.objects ?? []) {
-      switch (spawnPoint.class_) {
-        case 'Player':
-          player.position = Vector2(spawnPoint.x, spawnPoint.y);
-          add(player);
-          break;
-        default:
-          break;
+    if (spawnPointsLayer != null) {
+      for (final TiledObject object in spawnPointsLayer.objects) {
+        switch (object.class_) {
+          case 'Player':
+            player.position = Vector2(object.x, object.y);
+            add(player);
+            break;
+          default:
+            break;
+        }
       }
     }
+    final collisions = level.tileMap.getLayer<ObjectGroup>('Collisions');
+
+    if (collisions != null) {
+      for (final TiledObject object in collisions.objects) {
+        switch (object.class_) {
+          case 'Platform':
+            final platform = (CollisionBlock(
+              position: Vector2(object.x, object.y),
+              size: Vector2(object.width, object.height),
+              isPlatform: true,
+            ));
+            collisionBlocks.add(platform);
+            add(platform);
+            break;
+          default:
+            final collisionBlock = CollisionBlock(
+              position: Vector2(object.x, object.y),
+              size: Vector2(object.width, object.height),
+            );
+            collisionBlocks.add(collisionBlock);
+            add(collisionBlock);
+            break;
+        }
+      }
+    }
+
     return super.onLoad();
   }
 }
