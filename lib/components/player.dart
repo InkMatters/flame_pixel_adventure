@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flame/components.dart';
+import 'package:flame_pixel_adventure/components/collision_bloc.dart';
+import 'package:flame_pixel_adventure/utils/utils.dart';
 import 'package:flutter/services.dart';
 
 import '../game.dart';
@@ -45,9 +47,12 @@ class Player extends SpriteAnimationGroupComponent
   double speed = 100;
   Vector2 velocity = Vector2.zero();
 
+  List<CollisionBlock> collisionBlocks = <CollisionBlock>[];
+
   @override
   FutureOr<void> onLoad() {
     _loadAllAnimations();
+    debugMode = true;
     return super.onLoad();
   }
 
@@ -55,6 +60,7 @@ class Player extends SpriteAnimationGroupComponent
   void update(double dt) {
     _updatePlayerState();
     _updatePlayerMovement(dt);
+    _checkHorizontalCollisions();
     super.update(dt);
   }
 
@@ -115,5 +121,22 @@ class Player extends SpriteAnimationGroupComponent
     if (velocity.x != 0) state = PlayerState.running;
 
     current = state;
+  }
+
+  void _checkHorizontalCollisions() {
+    for (final block in collisionBlocks) {
+      if (!block.isPlatform) {
+        if (checkCollision(this, block)) {
+          if (velocity.x > 0) {
+            velocity.x = 0;
+            position.x = block.x - width;
+          }
+          if (velocity.x < 0) {
+            velocity.x = 0;
+            position.x = block.x + block.width + width;
+          }
+        }
+      }
+    }
   }
 }

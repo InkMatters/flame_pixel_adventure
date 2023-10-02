@@ -66,6 +66,7 @@ class Level extends World {
             break;
         }
       }
+      player.collisionBlocks = collisionBlocks;
     }
 
     return super.onLoad();
