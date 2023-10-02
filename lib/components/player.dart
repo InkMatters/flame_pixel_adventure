@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart';
-import 'package:flame_pixel_adventure/resources/step_time.dart';
-import 'package:flutter/src/services/keyboard_key.g.dart';
-import 'package:flutter/src/services/raw_keyboard.dart';
+import '../resources/step_time.dart';
 
 import '../game.dart';
 

@@ -5,13 +5,14 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'actors/player.dart';
-import 'levels/level.dart';
+import 'components/level.dart';
+import 'components/player.dart';
 import 'resources/color_palette.dart';
 
 class FlamePixelAdventure extends FlameGame
     with HasKeyboardHandlerComponents, DragCallbacks {
   Player player = Player();
+  @override
   late final CameraComponent camera;
   late JoystickComponent joystick;
   bool showJoystick = true;
